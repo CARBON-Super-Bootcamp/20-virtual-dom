@@ -1,13 +1,13 @@
-const {
+import {
   loadingAction,
   errorAction,
   registeredAction,
   removedAction,
   workersLoadedAction,
-} = require('./store');
-const workerSvc = require('./worker.client');
+} from './store';
+import * as workerSvc from './worker.client';
 
-exports.register = (data) => async (dispatch) => {
+export const register = (data) => async (dispatch) => {
   dispatch(loadingAction());
   try {
     const worker = await workerSvc.register(data);

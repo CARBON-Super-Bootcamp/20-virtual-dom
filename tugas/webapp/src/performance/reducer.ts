@@ -1,8 +1,8 @@
 // setup state
 export interface State {
-  loading: boolean,
-  error: string | null,
-  summary: PerformanceSummary
+  loading: boolean;
+  error: string | null;
+  summary: PerformanceSummary;
 }
 
 export interface PerformanceSummary {

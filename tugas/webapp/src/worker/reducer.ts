@@ -1,27 +1,55 @@
-const { SERVICE_BASEURL } = require('./config');
+import { SERVICE_BASEURL } from './config';
 
+export interface State {
+  loading: boolean;
+  error: string | null;
+  workers: Worker[];
+}
+
+export interface Worker {
+  id: number;
+  name: string;
+  photo: string;
+  bio: string;
+}
+
+interface ActionObject {
+  type: string;
+}
+
+interface ActionObjectError extends ActionObject {
+  payload: string;
+}
+
+interface ActionObjectRegistered extends ActionObject {
+  payload: Worker;
+}
+
+interface ActionObjectRemoved extends ActionObject {
+  payload: number | string;
+}
 // setup state
-const initialState = {
+const initialState: State = {
   loading: false,
   error: null,
   workers: [],
 };
 
-function loading(state) {
+function loading(state: State): void {
   state.loading = true;
   state.error = null;
 }
 
-function error(state, action) {
+function error(state: State, action: ActionObjectError): void {
   state.loading = false;
   state.error = action.payload;
 }
 
-function clearError(state) {
+function clearError(state: State): void {
   state.error = null;
 }
 
-function registered(state, action) {
+function registered(state: State, action: ActionObjectRegistered): State {
   const worker = action.payload;
   state.workers.push({
     id: worker.id,
@@ -34,7 +62,7 @@ function registered(state, action) {
   return state;
 }
 
-function removed(state, action) {
+function removed(state: State, action: ActionObjectRemoved): State {
   const idx = state.workers.findIndex((t) => t.id === action.payload);
   state.workers.splice(idx, 1);
   state.loading = false;
