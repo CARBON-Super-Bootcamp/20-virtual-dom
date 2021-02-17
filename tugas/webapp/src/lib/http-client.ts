@@ -65,8 +65,12 @@ client.put = (
   return client(endpoint, { method: 'PUT', body, ...customConf });
 };
 
-client.del = (endpoint: string,customConf = {},json: any, body?: any) => {
-  return client(endpoint, json, { method: 'DELETE', body, ...customConf });
+client.del = (
+  endpoint: string,
+  body?: any,
+  customConf: any = {}
+): Promise<any> => {
+  return client(endpoint, { method: 'DELETE', body, ...customConf });
 };
 
 export { client as httpClient };
